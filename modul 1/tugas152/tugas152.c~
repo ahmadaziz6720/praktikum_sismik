@@ -1,0 +1,22 @@
+#include <mega328.h>
+#include <delay.h>
+void main(void) {
+ //Set mode PIN D menjadi OUTPUT
+ DDRD=0xff;
+ 
+ //Set mode PIN B menjadi INPUT      
+ DDRB=0x00;      
+ PORTB = 0xff; // set sebagai pull up
+ int i = 0;
+ 
+ while (1) {
+   if (!(PINB.1)) {
+     PORTD = ~(1 << i);
+     i++;
+     if (i > 7) {
+       i = 0;
+     }
+     while (!(PINB.1)) {};
+   }
+ }
+}

@@ -1,0 +1,24 @@
+#include <mega328.h>
+#include <delay.h>
+int i;
+void main(void) {
+ //Set mode PIN D menjadi OUTPUT
+ DDRD=0bXXXXXXXX;
+ while (1) {
+ /*==============================================
+ Tuliskan Kode Program yang membuat perilaku running
+ LED dari LED LSB ke MSB. Pergantian LED diberi jeda
+ sebesar 1 detik. Ilustrasi output sebagai berikut
+ X 0 0 0 0 0 0 0 X = ON
+ 0 X 0 0 0 0 0 0 0 = OFF
+ 0 0 X 0 0 0 0 0
+ 0 0 0 X 0 0 0 0
+ 0 0 0 0 X 0 0 0
+ 0 0 0 0 0 X 0 0
+ 0 0 0 0 0 0 X 0
+ 0 0 0 0 0 0 0 X
+ X 0 0 0 0 0 0 0
+ dan seterusnya...
+ ==============================================*/
+ }
+}
