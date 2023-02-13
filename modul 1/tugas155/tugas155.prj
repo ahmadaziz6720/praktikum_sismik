@@ -21,7 +21,7 @@ OutputExecutableFilesDirectory=Release\Exe
 OutputLinkerFilesDirectory=Release\Link
 AllowDisplayFunctionCallTree=1
 CleanUp=2
-TimeStamp1=1447651032
+TimeStamp1=1447905931
 [CompilerDebug]
 Chip=ATmega328P
 CPUClock=16000000
@@ -398,10 +398,11 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1447653074
+TimeStamp=1447907065
 [BookmarksFoldedCode]
-Files=1
+Files=2
 F1=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas155\tugas155.c
+F2=tugas155.c
 [Bookmarks1]
 TimeStamp=1447651032
 Row=2
@@ -428,3 +429,21 @@ Files=3
 F1=C:\cvavreval\inc\mega328.h
 F2=C:\cvavreval\inc\mega328p_bits.h
 F3=C:\cvavreval\inc\delay.h
+[Bookmarks2]
+TimeStamp=1447905931
+Row=15
+Column=60
+ScrollPosX=0
+ScrollPosY=0
+BK0=-1
+BK1=-1
+BK2=-1
+BK3=-1
+BK4=-1
+BK5=-1
+BK6=-1
+BK7=-1
+BK8=-1
+BK9=-1
+[FoldedCode2]
+Blocks=0
