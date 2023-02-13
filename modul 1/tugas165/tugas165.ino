@@ -1,19 +1,14 @@
-/*******************************************************
-This program was created by the CodeWizardAVR V3.48a
-Automatic Program Generator
-� Copyright 1998-2022 Pavel Haiduc, HP InfoTech S.R.L.
-http://www.hpinfotech.ro
-Project : Tugas 1.6.5
-Version : TP
-Date : 09/02/2023
-Author : Amelia Ats Tsaniyah F./13220002
-Chip type : ATmega328P
-Program type : Application
-AVR Core Clock frequency: 16.000000 MHz
-Memory model : Small
-External RAM size : 0
-Data Stack size : 512
-*******************************************************/
+// Praktikum EL3116 - Sistem Microprosesor
+// Modul : 1
+// Percobaan : 1
+// Tanggal : 10 Februari 2023
+// Kelompok : 10
+// Rombongan : B
+// Nama (NIM) 1 : Ahmad Aziz (13220034)
+// Nama (NIM) 2 : Amelia Ats Tsaniyah Fajri (13220002)
+// Nama File : tugas165.ino
+// Deskripsi : button interupt
+// button interupt
 
 #define button 2
 void setup() {
