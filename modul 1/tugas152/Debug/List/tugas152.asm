@@ -1,5 +1,5 @@
 
-;CodeVisionAVR C Compiler V3.50 Evaluation
+;CodeVisionAVR C Compiler V3.50 
 ;(C) Copyright 1998-2023 Pavel Haiduc, HP InfoTech S.R.L.
 ;http://www.hpinfotech.ro
 
@@ -1518,66 +1518,113 @@ __CLEAR_SRAM:
 	.SET power_ctrl_reg=smcr
 	#endif
 ;void main(void) {
-; 0000 0003 void main(void) {
+; 0000 000F void main(void) {
 
 	.CSEG
 _main:
 ; .FSTART _main
-; 0000 0004 int i = 0;
-; 0000 0005 //Set mode PIN D menjadi OUTPUT
-; 0000 0006 DDRD=0xff;
+; 0000 0010 int i = 0;
+; 0000 0011 int state = 0;
+; 0000 0012 //Set mode PIN D menjadi OUTPUT
+; 0000 0013 DDRD=0xff;
 ;	i -> R16,R17
+;	state -> R18,R19
 	__GETWRN 16,17,0
+	__GETWRN 18,19,0
 	LDI  R30,LOW(255)
 	OUT  0xA,R30
-; 0000 0007 
-; 0000 0008 //Set mode PIN B menjadi INPUT
-; 0000 0009 DDRB=0x00;
+; 0000 0014 
+; 0000 0015 //Set mode PIN B menjadi INPUT
+; 0000 0016 DDRB=0x00;
 	LDI  R30,LOW(0)
 	OUT  0x4,R30
-; 0000 000A PORTB = 0xff; // set sebagai pull up
+; 0000 0017 PORTD = 0xff;
 	LDI  R30,LOW(255)
-	OUT  0x5,R30
-; 0000 000B 
-; 0000 000C 
-; 0000 000D while (1) {
-_0x3:
-; 0000 000E if (!(PINB.1)) {
-	SBIC 0x3,1
-	RJMP _0x6
-; 0000 000F delay_ms(1000);
-	LDI  R26,LOW(1000)
-	LDI  R27,HIGH(1000)
-	RCALL _delay_ms
-; 0000 0010 PORTD = ~(1 << i);
-	MOV  R30,R16
-	LDI  R26,LOW(1)
-	RCALL __LSLB12
-	COM  R30
 	OUT  0xB,R30
-; 0000 0011 i++;
-	__ADDWRN 16,17,1
-; 0000 0012 if (i > 7) {
-	__CPWRN 16,17,8
-	BRLT _0x7
-; 0000 0013 i = 0;
-	__GETWRN 16,17,0
-; 0000 0014 }
-; 0000 0015 while (!(PINB.1)) {};
+; 0000 0018 
+; 0000 0019 while (1) {
+_0x3:
+; 0000 001A if ((PINB.1) == 0 && state == 0) {
+	SBIC 0x3,1
+	RJMP _0x7
+	CLR  R0
+	CP   R0,R18
+	CPC  R0,R19
+	BREQ _0x8
 _0x7:
+	RJMP _0x6
 _0x8:
-	SBIS 0x3,1
-	RJMP _0x8
-; 0000 0016 }
-; 0000 0017 }
+; 0000 001B delay_ms(300);
+	RCALL SUBOPT_0x0
+; 0000 001C PORTD &= ~(1<<i);
+	COM  R30
+	AND  R30,R1
+	OUT  0xB,R30
+; 0000 001D i++;
+	__ADDWRN 16,17,1
+; 0000 001E if (i > 7) {
+	__CPWRN 16,17,8
+	BRLT _0x9
+; 0000 001F state = 1;
+	__GETWRN 18,19,1
+; 0000 0020 i = 7;
+	__GETWRN 16,17,7
+; 0000 0021 }
+; 0000 0022 } else if ((PINB.1) == 0 && state == 1) {
+_0x9:
+	RJMP _0xA
 _0x6:
-	RJMP _0x3
-; 0000 0018 }
-_0xB:
+	SBIC 0x3,1
+	RJMP _0xC
+	LDI  R30,LOW(1)
+	LDI  R31,HIGH(1)
+	CP   R30,R18
+	CPC  R31,R19
+	BREQ _0xD
+_0xC:
 	RJMP _0xB
+_0xD:
+; 0000 0023 delay_ms(300);
+	RCALL SUBOPT_0x0
+; 0000 0024 PORTD |= (1<<i);
+	OR   R30,R1
+	OUT  0xB,R30
+; 0000 0025 i--;
+	__SUBWRN 16,17,1
+; 0000 0026 if (i < 0) {
+	TST  R17
+	BRPL _0xE
+; 0000 0027 state = 0;
+	__GETWRN 18,19,0
+; 0000 0028 i = 0;
+	__GETWRN 16,17,0
+; 0000 0029 PORTD = 0xff;
+	LDI  R30,LOW(255)
+	OUT  0xB,R30
+; 0000 002A }
+; 0000 002B }
+_0xE:
+; 0000 002C }
+_0xB:
+_0xA:
+	RJMP _0x3
+; 0000 002D }
+_0xF:
+	RJMP _0xF
 ; .FEND
 
 	.CSEG
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
+SUBOPT_0x0:
+	LDI  R26,LOW(300)
+	LDI  R27,HIGH(300)
+	RCALL _delay_ms
+	IN   R1,11
+	MOV  R30,R16
+	LDI  R26,LOW(1)
+	RCALL __LSLB12
+	RET
+
 ;RUNTIME LIBRARY
 
 	.CSEG

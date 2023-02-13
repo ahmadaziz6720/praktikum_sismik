@@ -1,5 +1,5 @@
 
-;CodeVisionAVR C Compiler V3.50 Evaluation
+;CodeVisionAVR C Compiler V3.50 
 ;(C) Copyright 1998-2023 Pavel Haiduc, HP InfoTech S.R.L.
 ;http://www.hpinfotech.ro
 
@@ -1416,9 +1416,6 @@ __DELAY_USW_LOOP:
 	ADD  R31,R0
 	.ENDM
 
-;NAME DEFINITIONS FOR GLOBAL VARIABLES ALLOCATED TO REGISTERS
-	.DEF _LED_state=R4
-
 ;GPIOR0 INITIALIZATION VALUE
 	.EQU __GPIOR0_INIT=0x00
 
@@ -1456,21 +1453,6 @@ __START_OF_CODE:
 	JMP  0x00
 	JMP  0x00
 
-;GLOBAL REGISTER VARIABLES INITIALIZATION
-__REG_VARS:
-	.DB  0x0
-
-
-__GLOBAL_INI_TBL:
-	.DW  0x01
-	.DW  0x04
-	.DW  __REG_VARS*2
-
-_0xFFFFFFFF:
-	.DW  0
-
-#define __GLOBAL_INI_TBL_PRESENT 1
-
 __RESET:
 	CLI
 	CLR  R30
@@ -1500,29 +1482,6 @@ __CLEAR_SRAM:
 	ST   X+,R30
 	SBIW R24,1
 	BRNE __CLEAR_SRAM
-
-;GLOBAL VARIABLES INITIALIZATION
-	LDI  R30,LOW(__GLOBAL_INI_TBL*2)
-	LDI  R31,HIGH(__GLOBAL_INI_TBL*2)
-__GLOBAL_INI_NEXT:
-	LPM  R24,Z+
-	LPM  R25,Z+
-	SBIW R24,0
-	BREQ __GLOBAL_INI_END
-	LPM  R26,Z+
-	LPM  R27,Z+
-	LPM  R0,Z+
-	LPM  R1,Z+
-	MOVW R22,R30
-	MOVW R30,R0
-__GLOBAL_INI_LOOP:
-	LPM  R0,Z+
-	ST   X+,R0
-	SBIW R24,1
-	BRNE __GLOBAL_INI_LOOP
-	MOVW R30,R22
-	RJMP __GLOBAL_INI_NEXT
-__GLOBAL_INI_END:
 
 ;GPIOR0 INITIALIZATION
 	LDI  R30,__GPIOR0_INIT
@@ -1559,112 +1518,110 @@ __GLOBAL_INI_END:
 	.SET power_ctrl_reg=smcr
 	#endif
 ;void init_int(void) {
-; 0000 0012 void init_int(void) {
+; 0000 0016 void init_int(void) {
 
 	.CSEG
 _init_int:
 ; .FSTART _init_int
-; 0000 0013 //set prescaler 1024
-; 0000 0014 TCCR1B |= (1<<CS12) | (1<<CS10);
-	LDS  R30,129
-	ORI  R30,LOW(0x5)
-	STS  129,R30
-; 0000 0015 TIMSK1 |= (1<<TOIE1);
-	LDS  R30,111
-	ORI  R30,1
+; 0000 0017 //set prescaler 1024
+; 0000 0018 TIMSK1=0b000001;
+	LDI  R30,LOW(1)
 	STS  111,R30
-; 0000 0016 
-; 0000 0017 TCNT1H = TCNT_HIGH;
-	RCALL SUBOPT_0x0
-; 0000 0018 TCNT1L = TCNT_LOW;
-; 0000 0019 
-; 0000 001A // Enable Interrupt
-; 0000 001B #asm("sei")
+; 0000 0019 TCCR1B=0b00000101;
+	LDI  R30,LOW(5)
+	STS  129,R30
+; 0000 001A 
+; 0000 001B TCNT1H=TCNT_HIGH;
+	LDI  R30,LOW(194)
+	STS  133,R30
+; 0000 001C TCNT1L=TCNT_LOW;
+	LDI  R30,LOW(247)
+	STS  132,R30
+; 0000 001D 
+; 0000 001E //Enable Interrupt
+; 0000 001F #asm("sei")
 	SEI
-; 0000 001C }
+; 0000 0020 }
 	RET
 ; .FEND
 ;interrupt [14] void timer1_ovf_isr(void) {
-; 0000 001E interrupt [14] void timer1_ovf_isr(void) {
+; 0000 0022 interrupt [14] void timer1_ovf_isr(void) {
 _timer1_ovf_isr:
 ; .FSTART _timer1_ovf_isr
+	ST   -Y,R0
+	ST   -Y,R1
+	ST   -Y,R15
+	ST   -Y,R22
+	ST   -Y,R23
+	ST   -Y,R24
+	ST   -Y,R25
+	ST   -Y,R26
+	ST   -Y,R27
 	ST   -Y,R30
-; 0000 001F TCNT1H = TCNT_HIGH;
-	RCALL SUBOPT_0x0
-; 0000 0020 TCNT1L = TCNT_LOW;
-; 0000 0021 }
+	ST   -Y,R31
+	IN   R30,SREG
+	ST   -Y,R30
+; 0000 0023 //LED ON, jeda 1 detik
+; 0000 0024 PORTD = 0xFF;
+	LDI  R30,LOW(255)
+	OUT  0xB,R30
+; 0000 0025 delay_ms(1000);
+	LDI  R26,LOW(1000)
+	LDI  R27,HIGH(1000)
+	RCALL _delay_ms
+; 0000 0026 }
 	LD   R30,Y+
+	OUT  SREG,R30
+	LD   R31,Y+
+	LD   R30,Y+
+	LD   R27,Y+
+	LD   R26,Y+
+	LD   R25,Y+
+	LD   R24,Y+
+	LD   R23,Y+
+	LD   R22,Y+
+	LD   R15,Y+
+	LD   R1,Y+
+	LD   R0,Y+
 	RETI
 ; .FEND
-;void Delay(void) {
-; 0000 0023 void Delay(void) {
-_Delay:
-; .FSTART _Delay
-; 0000 0024 unsigned char i;
-; 0000 0025 for (i=0; i<100; i++) {
-	ST   -Y,R17
-;	i -> R17
-	LDI  R17,LOW(0)
-_0x4:
-	CPI  R17,100
-	BRSH _0x5
-; 0000 0026 delay_ms(1);
-	LDI  R26,LOW(1)
-	LDI  R27,0
-	RCALL _delay_ms
-; 0000 0027 }
-	SUBI R17,-1
-	RJMP _0x4
-_0x5:
-; 0000 0028 }
-	LD   R17,Y+
-	RET
-; .FEND
 ;void main(void) {
-; 0000 002A void main(void) {
+; 0000 0028 void main(void) {
 _main:
 ; .FSTART _main
-; 0000 002B LED_INIT;
-	LDI  R30,LOW(255)
-	OUT  0x4,R30
-; 0000 002C init_int();
+; 0000 0029 init_int();
 	RCALL _init_int
-; 0000 002D while (1) {
-_0x6:
-; 0000 002E LED_state = !LED_state;
-	MOV  R30,R4
-	__LNEGB1
-	MOV  R4,R30
-; 0000 002F if (LED_state) {
-	TST  R4
-	BREQ _0x9
-; 0000 0030 LED_ON;
-	LDI  R30,LOW(1)
-	RJMP _0xC
-; 0000 0031 } else {
-_0x9:
-; 0000 0032 LED_OFF;
+; 0000 002A DDRD = 0xFF;
+	LDI  R30,LOW(255)
+	OUT  0xA,R30
+; 0000 002B 
+; 0000 002C PORTD = 0x00;
 	LDI  R30,LOW(0)
-_0xC:
-	OUT  0x5,R30
+	OUT  0xB,R30
+; 0000 002D while (1) {
+_0x3:
+; 0000 002E PORTD = 0b10101010;
+	LDI  R30,LOW(170)
+	RCALL SUBOPT_0x0
+; 0000 002F delay_ms(100);
+; 0000 0030 PORTD = 0b01010101;
+	LDI  R30,LOW(85)
+	RCALL SUBOPT_0x0
+; 0000 0031 delay_ms(100);
+; 0000 0032 }
+	RJMP _0x3
 ; 0000 0033 }
-; 0000 0034 Delay();
-	RCALL _Delay
-; 0000 0035 }
+_0x6:
 	RJMP _0x6
-; 0000 0036 }
-_0xB:
-	RJMP _0xB
 ; .FEND
 
 	.CSEG
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
 SUBOPT_0x0:
-	LDI  R30,LOW(253)
-	STS  133,R30
-	LDI  R30,LOW(63)
-	STS  132,R30
-	RET
+	OUT  0xB,R30
+	LDI  R26,LOW(100)
+	LDI  R27,0
+	RJMP _delay_ms
 
 ;RUNTIME LIBRARY
 

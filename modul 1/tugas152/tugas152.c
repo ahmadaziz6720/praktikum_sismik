@@ -1,24 +1,45 @@
+// Praktikum EL3116 - Sistem Microprosesor
+// Modul : 1
+// Percobaan : 2
+// Tanggal : 10 Februari 2023
+// Kelompok : 10
+// Rombongan : B
+// Nama (NIM) 1 : Ahmad Aziz (13220034)
+// Nama (NIM) 2 : Amelia Ats Tsaniyah Fajri (13220002)
+// Nama File : tugas152.c
+// Deskripsi : Running led with push button
+// Running led with push button
+
 #include <mega328.h>
 #include <delay.h>
 void main(void) {
 	int i = 0;
+    int state = 0;
 	//Set mode PIN D menjadi OUTPUT
 	DDRD=0xff;
  
 	//Set mode PIN B menjadi INPUT      
-	DDRB=0x00;      
-	PORTB = 0xff; // set sebagai pull up
- 
+	DDRB=0x00;        
+    PORTD = 0xff; 
  
 	while (1) {
-		if (!(PINB.1)) {
-			delay_ms(1000);
-			PORTD = ~(1 << i);
+	    if ((PINB.1) == 0 && state == 0) {
+			delay_ms(300);
+			PORTD &= ~(1<<i);
 			i++;
 			if (i > 7) {
-				i = 0;
+				state = 1;
+				i = 7;
 			}
-		while (!(PINB.1)) {};
-	   }
-	}
+		} else if ((PINB.1) == 0 && state == 1) {
+			delay_ms(300);
+			PORTD |= (1<<i);
+			i--;
+			if (i < 0) {
+				state = 0;
+				i = 0;
+				PORTD = 0xff;
+			}
+		}
+    }
 }

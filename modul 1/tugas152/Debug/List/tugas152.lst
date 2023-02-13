@@ -1,9 +1,9 @@
 
-AVRASM ver. 2.1.30  C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\Debug\List\tugas152.asm Thu Feb 09 12:29:27 2023
+AVRASM ver. 2.1.30  C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\Debug\List\tugas152.asm Mon Feb 13 08:58:43 2023
 
                  
                  
-                 ;CodeVisionAVR C Compiler V3.50 Evaluation
+                 ;CodeVisionAVR C Compiler V3.50 
                  ;(C) Copyright 1998-2023 Pavel Haiduc, HP InfoTech S.R.L.
                  ;http://www.hpinfotech.ro
                  
@@ -1522,110 +1522,172 @@ AVRASM ver. 2.1.30  C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktik
                  	.SET power_ctrl_reg=smcr
                  	#endif
                  ;void main(void) {
-                 ; 0000 0003 void main(void) {
+                 ; 0000 000F void main(void) {
                  
                  	.CSEG
                  _main:
                  ; .FSTART _main
-                 ; 0000 0004 int i = 0;
-                 ; 0000 0005 //Set mode PIN D menjadi OUTPUT
-                 ; 0000 0006 DDRD=0xff;
+                 ; 0000 0010 int i = 0;
+                 ; 0000 0011 int state = 0;
+                 ; 0000 0012 //Set mode PIN D menjadi OUTPUT
+                 ; 0000 0013 DDRD=0xff;
                  ;	i -> R16,R17
+                 ;	state -> R18,R19
                 +
 000051 e000     +LDI R16 , LOW ( 0 )
 000052 e010     +LDI R17 , HIGH ( 0 )
                  	__GETWRN 16,17,0
-000053 efef      	LDI  R30,LOW(255)
-000054 b9ea      	OUT  0xA,R30
-                 ; 0000 0007 
-                 ; 0000 0008 //Set mode PIN B menjadi INPUT
-                 ; 0000 0009 DDRB=0x00;
-000055 e0e0      	LDI  R30,LOW(0)
-000056 b9e4      	OUT  0x4,R30
-                 ; 0000 000A PORTB = 0xff; // set sebagai pull up
-000057 efef      	LDI  R30,LOW(255)
-000058 b9e5      	OUT  0x5,R30
-                 ; 0000 000B 
-                 ; 0000 000C 
-                 ; 0000 000D while (1) {
+                +
+000053 e020     +LDI R18 , LOW ( 0 )
+000054 e030     +LDI R19 , HIGH ( 0 )
+                 	__GETWRN 18,19,0
+000055 efef      	LDI  R30,LOW(255)
+000056 b9ea      	OUT  0xA,R30
+                 ; 0000 0014 
+                 ; 0000 0015 //Set mode PIN B menjadi INPUT
+                 ; 0000 0016 DDRB=0x00;
+000057 e0e0      	LDI  R30,LOW(0)
+000058 b9e4      	OUT  0x4,R30
+                 ; 0000 0017 PORTD = 0xff;
+000059 efef      	LDI  R30,LOW(255)
+00005a b9eb      	OUT  0xB,R30
+                 ; 0000 0018 
+                 ; 0000 0019 while (1) {
                  _0x3:
-                 ; 0000 000E if (!(PINB.1)) {
-000059 9919      	SBIC 0x3,1
-00005a c012      	RJMP _0x6
-                 ; 0000 000F delay_ms(1000);
-00005b eea8      	LDI  R26,LOW(1000)
-00005c e0b3      	LDI  R27,HIGH(1000)
-00005d d019      	RCALL _delay_ms
-                 ; 0000 0010 PORTD = ~(1 << i);
-00005e 2fe0      	MOV  R30,R16
-00005f e0a1      	LDI  R26,LOW(1)
-000060 d00e      	RCALL __LSLB12
-000061 95e0      	COM  R30
-000062 b9eb      	OUT  0xB,R30
-                 ; 0000 0011 i++;
-                +
-000063 5f0f     +SUBI R16 , LOW ( - 1 )
-000064 4f1f     +SBCI R17 , HIGH ( - 1 )
-                 	__ADDWRN 16,17,1
-                 ; 0000 0012 if (i > 7) {
-                +
-000065 3008     +CPI R16 , LOW ( 8 )
-000066 e0e0     +LDI R30 , HIGH ( 8 )
-000067 071e     +CPC R17 , R30
-                 	__CPWRN 16,17,8
-000068 f014      	BRLT _0x7
-                 ; 0000 0013 i = 0;
-                +
-000069 e000     +LDI R16 , LOW ( 0 )
-00006a e010     +LDI R17 , HIGH ( 0 )
-                 	__GETWRN 16,17,0
-                 ; 0000 0014 }
-                 ; 0000 0015 while (!(PINB.1)) {};
+                 ; 0000 001A if ((PINB.1) == 0 && state == 0) {
+00005b 9919      	SBIC 0x3,1
+00005c c004      	RJMP _0x7
+00005d 2400      	CLR  R0
+00005e 1602      	CP   R0,R18
+00005f 0603      	CPC  R0,R19
+000060 f009      	BREQ _0x8
                  _0x7:
+000061 c00f      	RJMP _0x6
                  _0x8:
-00006b 9b19      	SBIS 0x3,1
-00006c cffe      	RJMP _0x8
-                 ; 0000 0016 }
-                 ; 0000 0017 }
+                 ; 0000 001B delay_ms(300);
+000062 d025      	RCALL SUBOPT_0x0
+                 ; 0000 001C PORTD &= ~(1<<i);
+000063 95e0      	COM  R30
+000064 21e1      	AND  R30,R1
+000065 b9eb      	OUT  0xB,R30
+                 ; 0000 001D i++;
+                +
+000066 5f0f     +SUBI R16 , LOW ( - 1 )
+000067 4f1f     +SBCI R17 , HIGH ( - 1 )
+                 	__ADDWRN 16,17,1
+                 ; 0000 001E if (i > 7) {
+                +
+000068 3008     +CPI R16 , LOW ( 8 )
+000069 e0e0     +LDI R30 , HIGH ( 8 )
+00006a 071e     +CPC R17 , R30
+                 	__CPWRN 16,17,8
+00006b f024      	BRLT _0x9
+                 ; 0000 001F state = 1;
+                +
+00006c e021     +LDI R18 , LOW ( 1 )
+00006d e030     +LDI R19 , HIGH ( 1 )
+                 	__GETWRN 18,19,1
+                 ; 0000 0020 i = 7;
+                +
+00006e e007     +LDI R16 , LOW ( 7 )
+00006f e010     +LDI R17 , HIGH ( 7 )
+                 	__GETWRN 16,17,7
+                 ; 0000 0021 }
+                 ; 0000 0022 } else if ((PINB.1) == 0 && state == 1) {
+                 _0x9:
+000070 c015      	RJMP _0xA
                  _0x6:
-00006d cfeb      	RJMP _0x3
-                 ; 0000 0018 }
+000071 9919      	SBIC 0x3,1
+000072 c005      	RJMP _0xC
+000073 e0e1      	LDI  R30,LOW(1)
+000074 e0f0      	LDI  R31,HIGH(1)
+000075 17e2      	CP   R30,R18
+000076 07f3      	CPC  R31,R19
+000077 f009      	BREQ _0xD
+                 _0xC:
+000078 c00d      	RJMP _0xB
+                 _0xD:
+                 ; 0000 0023 delay_ms(300);
+000079 d00e      	RCALL SUBOPT_0x0
+                 ; 0000 0024 PORTD |= (1<<i);
+00007a 29e1      	OR   R30,R1
+00007b b9eb      	OUT  0xB,R30
+                 ; 0000 0025 i--;
+                +
+00007c 5001     +SUBI R16 , LOW ( 1 )
+00007d 4010     +SBCI R17 , HIGH ( 1 )
+                 	__SUBWRN 16,17,1
+                 ; 0000 0026 if (i < 0) {
+00007e 2311      	TST  R17
+00007f f432      	BRPL _0xE
+                 ; 0000 0027 state = 0;
+                +
+000080 e020     +LDI R18 , LOW ( 0 )
+000081 e030     +LDI R19 , HIGH ( 0 )
+                 	__GETWRN 18,19,0
+                 ; 0000 0028 i = 0;
+                +
+000082 e000     +LDI R16 , LOW ( 0 )
+000083 e010     +LDI R17 , HIGH ( 0 )
+                 	__GETWRN 16,17,0
+                 ; 0000 0029 PORTD = 0xff;
+000084 efef      	LDI  R30,LOW(255)
+000085 b9eb      	OUT  0xB,R30
+                 ; 0000 002A }
+                 ; 0000 002B }
+                 _0xE:
+                 ; 0000 002C }
                  _0xB:
-00006e cfff      	RJMP _0xB
+                 _0xA:
+000086 cfd4      	RJMP _0x3
+                 ; 0000 002D }
+                 _0xF:
+000087 cfff      	RJMP _0xF
                  ; .FEND
                  
                  	.CSEG
+                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
+                 SUBOPT_0x0:
+000088 e2ac      	LDI  R26,LOW(300)
+000089 e0b1      	LDI  R27,HIGH(300)
+00008a d00d      	RCALL _delay_ms
+00008b b01b      	IN   R1,11
+00008c 2fe0      	MOV  R30,R16
+00008d e0a1      	LDI  R26,LOW(1)
+00008e d001      	RCALL __LSLB12
+00008f 9508      	RET
+                 
                  ;RUNTIME LIBRARY
                  
                  	.CSEG
                  __LSLB12:
-00006f 23ee      	TST  R30
-000070 2e0e      	MOV  R0,R30
-000071 2fea      	MOV  R30,R26
-000072 f019      	BREQ __LSLB12R
+000090 23ee      	TST  R30
+000091 2e0e      	MOV  R0,R30
+000092 2fea      	MOV  R30,R26
+000093 f019      	BREQ __LSLB12R
                  __LSLB12L:
-000073 0fee      	LSL  R30
-000074 940a      	DEC  R0
-000075 f7e9      	BRNE __LSLB12L
+000094 0fee      	LSL  R30
+000095 940a      	DEC  R0
+000096 f7e9      	BRNE __LSLB12L
                  __LSLB12R:
-000076 9508      	RET
+000097 9508      	RET
                  
                  _delay_ms:
-000077 9610      	adiw r26,0
-000078 f039      	breq __delay_ms1
+000098 9610      	adiw r26,0
+000099 f039      	breq __delay_ms1
                  __delay_ms0:
-000079 95a8      	wdr
+00009a 95a8      	wdr
                 +
-00007a ea80     +LDI R24 , LOW ( 0xFA0 )
-00007b e09f     +LDI R25 , HIGH ( 0xFA0 )
+00009b ea80     +LDI R24 , LOW ( 0xFA0 )
+00009c e09f     +LDI R25 , HIGH ( 0xFA0 )
                 +__DELAY_USW_LOOP :
-00007c 9701     +SBIW R24 , 1
-00007d f7f1     +BRNE __DELAY_USW_LOOP
+00009d 9701     +SBIW R24 , 1
+00009e f7f1     +BRNE __DELAY_USW_LOOP
                  	__DELAY_USW 0xFA0
-00007e 9711      	sbiw r26,1
-00007f f7c9      	brne __delay_ms0
+00009f 9711      	sbiw r26,1
+0000a0 f7c9      	brne __delay_ms0
                  __delay_ms1:
-000080 9508      	ret
+0000a1 9508      	ret
                  
                  ;END OF CODE MARKER
                  __END_OF_CODE:
@@ -1646,40 +1708,40 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 ATmega328P register use summary:
-r0 :   2 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
+r0 :   5 r1 :   3 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
-r16:   5 r17:   4 r18:   0 r19:   0 r20:   0 r21:   0 r22:   0 r23:   0 
-r24:   6 r25:   2 r26:   7 r27:   3 r28:   1 r29:   1 r30:  26 r31:   2 
+r16:   7 r17:   7 r18:   5 r19:   5 r20:   0 r21:   0 r22:   0 r23:   0 
+r24:   6 r25:   2 r26:   7 r27:   3 r28:   1 r29:   1 r30:  33 r31:   4 
 x  :   2 y  :   0 z  :   0 
-Registers used: 12 out of 35 (34.3%)
+Registers used: 15 out of 35 (42.9%)
 
 ATmega328P instruction use summary:
 .lds  :   0 .lds.l:   0 .sts  :   0 .sts.l:   0 adc   :   0 add   :   0 
-adiw  :   1 and   :   0 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 
-brbc  :   0 brbs  :   0 brcc  :   0 brcs  :   0 break :   0 breq  :   2 
+adiw  :   1 and   :   1 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 
+brbc  :   0 brbs  :   0 brcc  :   0 brcs  :   0 break :   0 breq  :   4 
 brge  :   0 brhc  :   0 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 
-brlt  :   1 brmi  :   0 brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 
+brlt  :   1 brmi  :   0 brne  :   5 brpl  :   1 brsh  :   0 brtc  :   0 
 brts  :   0 brvc  :   0 brvs  :   0 bset  :   0 bst   :   0 call  :   0 
 cbi   :   0 cbr   :   0 clc   :   0 clh   :   0 cli   :   1 cln   :   0 
-clr   :   2 cls   :   0 clt   :   0 clv   :   0 clz   :   0 com   :   1 
-cp    :   0 cpc   :   1 cpi   :   1 cpse  :   0 dec   :   2 des   :   0 
+clr   :   3 cls   :   0 clt   :   0 clv   :   0 clz   :   0 com   :   1 
+cp    :   2 cpc   :   3 cpi   :   1 cpse  :   0 dec   :   2 des   :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
-in    :   0 inc   :   0 jmp   :  27 ld    :   0 ldd   :   0 ldi   :  25 
+in    :   1 inc   :   0 jmp   :  27 ld    :   0 ldd   :   0 ldi   :  36 
 lds   :   0 lpm   :   0 lsl   :   1 lsr   :   0 mov   :   3 movw  :   0 
-mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
-ori   :   0 out   :  10 pop   :   0 push  :   0 rcall :   2 ret   :   2 
-reti  :   0 rjmp  :   4 rol   :   0 ror   :   0 sbc   :   0 sbci  :   1 
-sbi   :   0 sbic  :   1 sbis  :   1 sbiw  :   3 sbr   :   0 sbrc  :   0 
+mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   1 
+ori   :   0 out   :  12 pop   :   0 push  :   0 rcall :   4 ret   :   3 
+reti  :   0 rjmp  :   7 rol   :   0 ror   :   0 sbc   :   0 sbci  :   2 
+sbi   :   0 sbic  :   2 sbis  :   0 sbiw  :   3 sbr   :   0 sbrc  :   0 
 sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   0 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
-st    :   2 std   :   0 sts   :   0 sub   :   0 subi  :   1 swap  :   0 
-tst   :   1 wdr   :   1 
-Instructions used: 26 out of 116 (22.4%)
+st    :   2 std   :   0 sts   :   0 sub   :   0 subi  :   2 swap  :   0 
+tst   :   2 wdr   :   1 
+Instructions used: 30 out of 116 (25.9%)
 
 ATmega328P memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000102    258      0    258   32768   0.8%
+[.cseg] 0x000000 0x000144    324      0    324   32768   1.0%
 [.dseg] 0x000100 0x000300      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

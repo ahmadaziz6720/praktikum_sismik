@@ -21,7 +21,7 @@ OutputExecutableFilesDirectory=Release\Exe
 OutputLinkerFilesDirectory=Release\Link
 AllowDisplayFunctionCallTree=1
 CleanUp=2
-TimeStamp1=1447650805
+TimeStamp1=1447905559
 [CompilerDebug]
 Chip=ATmega328P
 CPUClock=16000000
@@ -128,8 +128,8 @@ DisplayCodeSizeError=1
 UseBootAppXmega=0
 RebuildAll=0
 LinkageInformationPresent=1
-COFFileTimeStamp=1447650813
-Build=1
+COFFileTimeStamp=1447905561
+Build=5
 GlobalVarAddr=768
 EEPROMVarAddr=0
 [DefinedSymbolsDebug]
@@ -241,7 +241,7 @@ UseBootAppXmega=0
 RebuildAll=1
 LinkageInformationPresent=0
 COFFileTimeStamp=-1
-Build=1
+Build=5
 [DefinedSymbols]
 Count=0
 [CompilerAdvanced]
@@ -357,8 +357,8 @@ L13=Enhanced function parameters passing: Mode 2
 L14=Automatic register allocation: Yes
 L15=Smart register allocation: Yes
 L16=
-L17=Build: 1
-L18=4701 line(s) compiled
+L17=Build: 5
+L18=4698 line(s) compiled
 L19=No errors
 L20=22 warning(s)
 L21=
@@ -366,7 +366,7 @@ L22=Bit variables size: 0 byte(s)
 L23=
 L24=Data Stack area: 0x100 to 0x2FF
 L25=Data Stack size: 512 byte(s)
-L26=Estimated Data Stack usage: 2 byte(s)
+L26=Estimated Data Stack usage: 12 byte(s)
 L27=
 L28=RAM Global variables size: 0 byte(s)
 L29=
@@ -377,22 +377,51 @@ L33=Heap size: 0 byte(s)
 L34=
 Lines=37
 L35=EEPROM usage: 0 byte(s), 0,0% of EEPROM
-L36=Program size: 167 words (334 bytes), 1,0% of FLASH
-L37=3 words (6 bytes), 1,8% reduced by Code Compression
+L36=Program size: 152 words (304 bytes), 0,9% of FLASH
+L37=1 words (2 bytes), 0,7% reduced by Code Compression
+L38=2 words (4 bytes), 1,3% reduced by Code Compression
 [BuildInfoAssembler]
 Lines=12
 L1=AVRASM: AVR macro assembler 2.1.30 (build 592 Nov  7 2008 12:38:17)
 L2=Copyright (C) 1995-2008 ATMEL Corporation
 L3=
-L4=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas154\Debug\List\tugas154.asm(1685): No EEPROM data, deleting C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas154\Debug\Exe\tugas154.eep
+L4=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas154\Debug\List\tugas154.asm(1642): No EEPROM data, deleting C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas154\Debug\Exe\tugas154.eep
 L5=
 L6=ATmega328P memory use summary [bytes]:
 L7=Segment   Begin    End      Code   Data   Used    Size   Use%
 L8=---------------------------------------------------------------
-L9=[.cseg] 0x000000 0x00014e    324     10    334   32768   1.0%
+L9=[.cseg] 0x000000 0x000130    304      0    304   32768   0.9%
 L10=[.dseg] 0x000100 0x000300      0      0      0    2048   0.0%
 L11=[.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 L12=
+[Bookmarks0]
+Row=0
+Column=0
+ScrollPosX=0
+ScrollPosY=0
+TimeStamp=1447905654
+[BookmarksFoldedCode]
+Files=2
+F1=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas154\tugas154.c
+F2=tugas154.c
+[Bookmarks1]
+TimeStamp=1447650805
+Row=49
+Column=26
+ScrollPosX=0
+ScrollPosY=28
+BK0=-1
+BK1=-1
+BK2=-1
+BK3=-1
+BK4=-1
+BK5=-1
+BK6=-1
+BK7=-1
+BK8=-1
+BK9=-1
+[FoldedCode1]
+Blocks=0
 [HeadersList]
 Files=1
 F1=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas154\tugas154.c
@@ -411,21 +440,12 @@ F10=C:\cvavreval\inc\avr\fuse.h
 F11=C:\cvavreval\inc\avr\lock.h
 F12=C:\cvavreval\inc\avr\interrupt.h
 F13=C:\cvavreval\inc\delay.h
-[Bookmarks0]
-Row=0
-Column=0
+[Bookmarks2]
+TimeStamp=1447905559
+Row=41
+Column=34
 ScrollPosX=0
-ScrollPosY=0
-TimeStamp=1447650984
-[BookmarksFoldedCode]
-Files=1
-F1=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas154\tugas154.c
-[Bookmarks1]
-TimeStamp=1447650805
-Row=49
-Column=26
-ScrollPosX=0
-ScrollPosY=28
+ScrollPosY=7
 BK0=-1
 BK1=-1
 BK2=-1
@@ -436,5 +456,5 @@ BK6=-1
 BK7=-1
 BK8=-1
 BK9=-1
-[FoldedCode1]
+[FoldedCode2]
 Blocks=0

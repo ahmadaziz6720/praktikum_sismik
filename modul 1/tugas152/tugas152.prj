@@ -9,7 +9,7 @@ D=09/02/2023
 Files=1
 F1=tugas152.c
 OpenedFiles=1
-OF1=tugas152.c
+OF1=..\tugas154\tugas154.c
 ActiveTab=1
 DebugOutputListFilesDirectory=Debug\List
 DebugOutputObjectFilesDirectory=Debug
@@ -21,7 +21,7 @@ OutputExecutableFilesDirectory=Release\Exe
 OutputLinkerFilesDirectory=Release\Link
 AllowDisplayFunctionCallTree=1
 CleanUp=2
-TimeStamp1=1447650218
+TimeStamp1=1447905093
 [CompilerDebug]
 Chip=ATmega328P
 CPUClock=16000000
@@ -128,8 +128,8 @@ DisplayCodeSizeError=1
 UseBootAppXmega=0
 RebuildAll=0
 LinkageInformationPresent=1
-COFFileTimeStamp=1447650222
-Build=2
+COFFileTimeStamp=1447905110
+Build=57
 GlobalVarAddr=768
 EEPROMVarAddr=0
 [DefinedSymbolsDebug]
@@ -241,7 +241,7 @@ UseBootAppXmega=0
 RebuildAll=1
 LinkageInformationPresent=0
 COFFileTimeStamp=-1
-Build=2
+Build=57
 [DefinedSymbols]
 Count=0
 [CompilerAdvanced]
@@ -357,8 +357,8 @@ L13=Enhanced function parameters passing: Mode 2
 L14=Automatic register allocation: Yes
 L15=Smart register allocation: Yes
 L16=
-L17=Build: 2
-L18=897 line(s) compiled
+L17=Build: 57
+L18=918 line(s) compiled
 L19=No errors
 L20=No warnings
 L21=
@@ -377,40 +377,34 @@ L33=Heap size: 0 byte(s)
 L34=
 Lines=37
 L35=EEPROM usage: 0 byte(s), 0,0% of EEPROM
-L36=Program size: 129 words (258 bytes), 0,8% of FLASH
-L37=0 words (0 bytes), 0,0% reduced by Code Compression
+L36=Program size: 162 words (324 bytes), 1,0% of FLASH
+L37=4 words (8 bytes), 2,4% reduced by Code Compression
 [BuildInfoAssembler]
 Lines=12
 L1=AVRASM: AVR macro assembler 2.1.30 (build 592 Nov  7 2008 12:38:17)
 L2=Copyright (C) 1995-2008 ATMEL Corporation
 L3=
-L4=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\Debug\List\tugas152.asm(1609): No EEPROM data, deleting C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\Debug\Exe\tugas152.eep
+L4=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\Debug\List\tugas152.asm(1656): No EEPROM data, deleting C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\Debug\Exe\tugas152.eep
 L5=
 L6=ATmega328P memory use summary [bytes]:
 L7=Segment   Begin    End      Code   Data   Used    Size   Use%
 L8=---------------------------------------------------------------
-L9=[.cseg] 0x000000 0x000102    258      0    258   32768   0.8%
+L9=[.cseg] 0x000000 0x000144    324      0    324   32768   1.0%
 L10=[.dseg] 0x000100 0x000300      0      0      0    2048   0.0%
 L11=[.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 L12=
-[HeadersList]
-Files=1
-F1=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\tugas152.c
-[Header1]
-Files=3
-F1=C:\cvavreval\inc\mega328.h
-F2=C:\cvavreval\inc\mega328p_bits.h
-F3=C:\cvavreval\inc\delay.h
 [Bookmarks0]
 Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1447650482
+TimeStamp=1447905132
 [BookmarksFoldedCode]
-Files=2
+Files=4
 F1=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\tugas152.c
 F2=tugas152.c
+F3=..\tugas153\tugas153.c
+F4=..\tugas154\tugas154.c
 [Bookmarks1]
 TimeStamp=1447650218
 Row=5
@@ -430,9 +424,53 @@ BK9=-1
 [FoldedCode1]
 Blocks=0
 [Bookmarks2]
-TimeStamp=1447650218
+TimeStamp=1447903876
 Row=0
 Column=0
+ScrollPosX=0
+ScrollPosY=13
+BK0=-1
+BK1=-1
+BK2=-1
+BK3=-1
+BK4=-1
+BK5=-1
+BK6=-1
+BK7=-1
+BK8=-1
+BK9=-1
+[Bookmarks3]
+TimeStamp=1447904486
+Row=32
+Column=21
+ScrollPosX=0
+ScrollPosY=16
+BK0=-1
+BK1=-1
+BK2=-1
+BK3=-1
+BK4=-1
+BK5=-1
+BK6=-1
+BK7=-1
+BK8=-1
+BK9=-1
+[FoldedCode3]
+Blocks=0
+[FoldedCode2]
+Blocks=0
+[HeadersList]
+Files=1
+F1=C:\Users\Ahmad Aziz\Data\Kuliah\semester 6\praktikum\praktikum sismik\modul 1\tugas152\tugas152.c
+[Header1]
+Files=3
+F1=C:\cvavreval\inc\mega328.h
+F2=C:\cvavreval\inc\mega328p_bits.h
+F3=C:\cvavreval\inc\delay.h
+[Bookmarks4]
+TimeStamp=1447905093
+Row=14
+Column=41
 ScrollPosX=0
 ScrollPosY=0
 BK0=-1
@@ -445,5 +483,5 @@ BK6=-1
 BK7=-1
 BK8=-1
 BK9=-1
-[FoldedCode2]
+[FoldedCode4]
 Blocks=0

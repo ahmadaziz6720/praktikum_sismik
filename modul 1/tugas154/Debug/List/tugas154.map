@@ -9,12 +9,10 @@ Variable                                                                        
 Register Allocation
 Variable                                                                          Register  Size
 ------------------------------------------------------------------------------------------------
-LED_state                                                                         R4           1
 
 FLASH Allocation [words]
 Function                                                                          Address   Size
 ------------------------------------------------------------------------------------------------
-init_int                                                                          0x00068     13
-timer1_ovf_isr                                                                    0x00075      4
-Delay                                                                             0x00079     11
-main                                                                              0x00084     18
+init_int                                                                          0x00051     14
+timer1_ovf_isr                                                                    0x0005F     32
+main                                                                              0x0007F     11
