@@ -33,67 +33,42 @@ void app_main() {
 	io_conf.pull_up_en = 1; // menggunakan pull up
 	gpio_config(&io_conf);
 	
-	int counter = 0;
-	
 	while (1) {
 		if (gpio_get_level(GPIO_INPUT_PB) == 0) {
 			
-			counter++;
-			
-			if (counter > 7) {
-				counter = 0;
-			}
-			
-			vTaskDelay(xDelay);
-			
-		}
-		
-		if (counter == 0) {
+			// masukkan potongan program LED menyala bergantian dari tugas 2.5.1 Output Digital
 			gpio_set_level(GPIO_OUTPUT_A, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_A, 0);
-		}
-		
-		if (counter == 1) {
+			
 			gpio_set_level(GPIO_OUTPUT_B, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_B, 0);
-		}
-		
-		if (counter == 2) {
+			
 			gpio_set_level(GPIO_OUTPUT_C, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_C, 0);
-		}
-		
-		if (counter == 3) {
+			
 			gpio_set_level(GPIO_OUTPUT_D, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_D, 0);
-		}
-		
-		if (counter == 4) {
+			
 			gpio_set_level(GPIO_OUTPUT_E, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_E, 0);
-		}
-		
-		if (counter == 5) {
+			
 			gpio_set_level(GPIO_OUTPUT_F, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_F, 0);
-		}
-		
-		if (counter == 6) {
+			
 			gpio_set_level(GPIO_OUTPUT_G, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_G, 0);
-		}
-		
-		if (counter == 7) {
+			
 			gpio_set_level(GPIO_OUTPUT_H, 1);
-		} else {
+			vTaskDelay(xDelay);
 			gpio_set_level(GPIO_OUTPUT_H, 0);
+			
 		}
 	}
 }
