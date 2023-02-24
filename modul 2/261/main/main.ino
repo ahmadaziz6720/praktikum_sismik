@@ -21,7 +21,8 @@ void setup() {
 
 void loop() {
     // Buatlah kondisi dimana 8 buah LED tersebut (GPIO_OUTPUT_A hingga GPIO_OUTPUT_H) menyala bergantian (menggunakanan gpio_set_level())setiap 0,5 detik dengan menggunakan vTaskDelay dan variabel xDelay di atas.
-    
+
+    /*
     digitalWrite(A, !digitalRead(A));
     digitalWrite(B, !digitalRead(B));
     digitalWrite(C, !digitalRead(C));
@@ -32,4 +33,39 @@ void loop() {
     digitalWrite(H, !digitalRead(H));
     
     delay(500);
+    */
+    digitalWrite(A, 1);
+    delay(500);
+    digitalWrite(A, 0);
+
+    digitalWrite(B, 1);
+    delay(500);
+    digitalWrite(B, 0);
+
+    digitalWrite(C, 1);
+    delay(500);
+    digitalWrite(C, 0);
+
+    digitalWrite(D, 1);
+    delay(500);
+    digitalWrite(D, 0);
+
+    digitalWrite(E, 1);
+    delay(500);
+    digitalWrite(E, 0);
+
+    digitalWrite(F, 1);
+    delay(500);
+    digitalWrite(F, 0);
+
+    digitalWrite(G, 1);
+    delay(500);
+    digitalWrite(G, 0);
+
+    digitalWrite(H, 1);
+    delay(500);
+    digitalWrite(H, 0);
+
+    
+    
   }
