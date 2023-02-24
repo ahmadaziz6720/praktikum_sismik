@@ -10,15 +10,22 @@
 // setup timer interupt timer 0 esp32
 hw_timer_t * My_timer = NULL;
 
+bool counter = 0;
+
 void IRAM_ATTR onTimer(){
-    digitalWrite(A, !digitalRead(A));
-    digitalWrite(B, !digitalRead(B));
-    digitalWrite(C, !digitalRead(C));
-    digitalWrite(D, !digitalRead(D));
-    digitalWrite(E, !digitalRead(E));
-    digitalWrite(F, !digitalRead(F));
-    digitalWrite(G, !digitalRead(G));
-    digitalWrite(H, !digitalRead(H));
+    if (counter == 0) {
+      digitalWrite(A, !digitalRead(A));
+      digitalWrite(B, !digitalRead(B));
+      digitalWrite(C, !digitalRead(C));
+      digitalWrite(D, !digitalRead(D));
+    } else {
+      digitalWrite(E, !digitalRead(E));
+      digitalWrite(F, !digitalRead(F));
+      digitalWrite(G, !digitalRead(G));
+      digitalWrite(H, !digitalRead(H));
+    }
+
+    counter = !counter;
 }
 
 void setup() {
