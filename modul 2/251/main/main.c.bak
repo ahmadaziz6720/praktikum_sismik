@@ -29,25 +29,35 @@ void app_main() {
 		// Buatlah kondisi dimana 8 buah LED tersebut (GPIO_OUTPUT_A hingga GPIO_OUTPUT_H) menyala bergantian (menggunakanan gpio_set_level())setiap 0,5 detik dengan menggunakan vTaskDelay dan variabel xDelay di atas.
 		
 		gpio_set_level(GPIO_OUTPUT_A, 1);
-		gpio_set_level(GPIO_OUTPUT_B, 1);
-		gpio_set_level(GPIO_OUTPUT_C, 1);
-		gpio_set_level(GPIO_OUTPUT_D, 1);
-		gpio_set_level(GPIO_OUTPUT_E, 1);
-		gpio_set_level(GPIO_OUTPUT_F, 1);
-		gpio_set_level(GPIO_OUTPUT_G, 1);
-		gpio_set_level(GPIO_OUTPUT_H, 1);
-		
 		vTaskDelay(xDelay);
-		
 		gpio_set_level(GPIO_OUTPUT_A, 0);
-		gpio_set_level(GPIO_OUTPUT_B, 0);
-		gpio_set_level(GPIO_OUTPUT_C, 0);
-		gpio_set_level(GPIO_OUTPUT_D, 0);
-		gpio_set_level(GPIO_OUTPUT_E, 0);
-		gpio_set_level(GPIO_OUTPUT_F, 0);
-		gpio_set_level(GPIO_OUTPUT_G, 0);
-		gpio_set_level(GPIO_OUTPUT_H, 0);
 		
+		gpio_set_level(GPIO_OUTPUT_B, 1);
 		vTaskDelay(xDelay);
+		gpio_set_level(GPIO_OUTPUT_B, 0);
+		
+		gpio_set_level(GPIO_OUTPUT_C, 1);
+		vTaskDelay(xDelay);
+		gpio_set_level(GPIO_OUTPUT_C, 0);
+		
+		gpio_set_level(GPIO_OUTPUT_D, 1);
+		vTaskDelay(xDelay);
+		gpio_set_level(GPIO_OUTPUT_D, 0);
+		
+		gpio_set_level(GPIO_OUTPUT_E, 1);
+		vTaskDelay(xDelay);
+		gpio_set_level(GPIO_OUTPUT_E, 0);
+		
+		gpio_set_level(GPIO_OUTPUT_F, 1);
+		vTaskDelay(xDelay);
+		gpio_set_level(GPIO_OUTPUT_F, 0);
+		
+		gpio_set_level(GPIO_OUTPUT_G, 1);
+		vTaskDelay(xDelay);
+		gpio_set_level(GPIO_OUTPUT_G, 0);
+		
+		gpio_set_level(GPIO_OUTPUT_H, 1);
+		vTaskDelay(xDelay);
+		gpio_set_level(GPIO_OUTPUT_H, 0);
 	}
 }
