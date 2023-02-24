@@ -4,7 +4,7 @@ int i = 0;
 
 //led shift when button pressed
 void ledShift(){
-    delay(50);
+    delay(200);
     digitalWrite(ledList[i], !digitalRead(ledList[i]));
     i++;
     if(i == 8){
@@ -20,7 +20,7 @@ void setup() {
     }
 
     pinMode(15, INPUT_PULLUP);
-    attachInterrupt(15, ledShift, FALLING);
+    attachInterrupt(15, ledShift, RISING);
 }
 
 void loop() {

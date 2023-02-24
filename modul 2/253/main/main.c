@@ -23,26 +23,28 @@
 void app_main(void) {
 	
 	gpio_config_t io_conf;
-	io_conf.intr_type = GPIO_INTR_DISABLE;
+	io_conf.intr_type = GPIO_INTR_POSEDGE;
 	io_conf.mode = GPIO_MODE_OUTPUT;
 	io_conf.pin_bit_mask = GPIO_OUTPUT_PIN_SEL;
 	io_conf.pull_down_en = 0;
-	io_conf.pull_up_en = 0;
+	io_conf.pull_up_en = 1;
 	gpio_config(&io_conf);
 	
 	// Timer menghitung ke atas, nanti baru di start, pakai alarm, namun tanpa reload counter value setelah alarm event.
 	timer_config_t config = {
-		.divider = TIMER_DIVIDER,
-		.counter_dir = TIMER_COUNT_UP,
-		.counter_en = 1,
-		.alarm_en = 1,
-		.auto_reload = 0,
-	};
+        .divider = TIMER_DIVIDER,
+        .counter_dir = TIMER_COUNT_UP,
+        .counter_en = TIMER_PAUSE,
+        .alarm_en = TIMER_ALARM_EN,
+        .auto_reload = TIMER_AUTORELOAD_EN
+    };
 	
 	// gunakan timer group dan hardware timer yang valid
-	timer_init(TIMER_GROUP_1, TIMER_0, &config);
-	timer_set_counter_value(TIMER_GROUP_1, TIMER_0, 0x00000000ULL);
-	timer_start(TIMER_GROUP_1, TIMER_0);
+	timer_init(TIMER_GROUP_0, TIMER_0, &config);
+    timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0);
+    timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, (80000000 / TIMER_DIVIDER));
+    timer_enable_intr(TIMER_GROUP_0, TIMER_0);
+    timer_start(TIMER_GROUP_0, TIMER_0);
 	
 	// Silahkan melengkapi potongan kode berikut ini untuk membuat program LED menyala bergeser setiap 250ms dan berulang mulai dari LED paling awal.
 	
@@ -52,7 +54,7 @@ void app_main(void) {
 	last_reset_time = 0;
 	
 	while (1) {
-		timer_get_counter_time_sec(TIMER_GROUP_1, TIMER_0, &current_time_sec);
+		timer_get_counter_time_sec(TIMER_GROUP_0, TIMER_0, &current_time_sec);
 		
 		if (current_time_sec - last_time_sec > DELAY_S) {
 			count++;
@@ -63,7 +65,7 @@ void app_main(void) {
 			last_reset_time = current_time_sec;
 		}
 		
-		// Buatlah kondisi dimana 8 buah LED tersebut (GPIO_OUTPUT_A hingga GPIO_OUTPUT_H) menyala bergantian hanya menggunakan variabel count dengan fungsi/API gpio_set_level(). Total hanya memerlukan 8 line tambahan vTaskDelay(1);
+		
 		gpio_set_level(count, 1);
 		vTaskDelay(1);
 	}

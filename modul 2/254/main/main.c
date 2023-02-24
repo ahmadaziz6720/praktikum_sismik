@@ -16,7 +16,7 @@
 //gunakan timer 0 esp32
 #define TIMER_USED TIMER_0
 #define TIMER_DIVIDER 16
-#define TIMER_SCALE (TIMER_BASE_CLK / TIMER_DIVIDER) 
+#define TIMER_SCALE (80000000 / TIMER_DIVIDER) 
 #define DELAY_S (1.0)
 #define NUMBER_OF_LED 8
 
@@ -63,10 +63,12 @@ void app_main(void) {
     .auto_reload = true,
     };
 
-    timer_init(TIMER_GROUP_0, TIMER_USED, &config);
-    timer_set_counter_value(TIMER_GROUP_0, TIMER_USED, 0x00000000ULL);
-    timer_set_alarm_value(TIMER_GROUP_0, TIMER_USED, DELAY_S * TIMER_SCALE);
-    timer_enable_intr(TIMER_GROUP_0, TIMER_USED);
+    timer_init(TIMER_GROUP_0, TIMER_0, &config);
+    timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0);
+    timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, (80000000 / TIMER_DIVIDER));
+    timer_enable_intr(TIMER_GROUP_0, TIMER_0);
+    timer_group0_isr(TIMER_GROUP_0, TIMER_0, timer_group0_isr, NULL, 0);
+    timer_start(TIMER_GROUP_0, TIMER_0);
     // Buat interrupt yang dapat dipanggil hanya pada IRAM/ROM
     int intr_alloc_flags = ESP_INTR_FLAG_IRAM | ESP_INTR_FLAG_LEVEL1;
 

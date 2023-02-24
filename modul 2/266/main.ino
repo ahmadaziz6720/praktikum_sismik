@@ -11,6 +11,7 @@ String header;
 String outputState = "off";
 // Assign output variables to GPIO pins
 const int output = 2;
+const int output2 = 4;
 // Current time
 unsigned long currentTime = millis();
 // Previous time
@@ -22,6 +23,7 @@ void setup() {
     Serial.begin(115200);
     // Initialize the output variables as outputs
     pinMode(output, OUTPUT);
+    pinMode(output2, OUTPUT);
     // Set outputs to LOW
     digitalWrite(output, LOW);
     // Connect to Wi-Fi network with SSID and password
@@ -69,10 +71,12 @@ void loop() {
                             Serial.println("GPIO on");
                             outputState = "on";
                             digitalWrite(output, HIGH);
+                            digitalWrite(output2, HIGH);
                         } else if (header.indexOf("GET /26/off") >= 0) {
                             Serial.println("GPIO off");
                             outputState = "off";
                             digitalWrite(output, LOW);
+                            digitalWrite(output2, LOW);
                         }
     
                         // Display the HTML web page

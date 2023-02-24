@@ -44,11 +44,7 @@ void app_main() {
     
     while (1) {
         if(gpio_get_level(GPIO_INPUT_PB) == 0) {
-            
-            on_led_count = (on_led_count + 1) % 8;
-            uint64_t led_mask = 0x0000000000000001ULL << on_led_count;
-            gpio_set_level(GPIO_OUTPUT_A + on_led_count, 1);
-            gpio_set_level(GPIO_OUTPUT_A + ((on_led_count + 7) % 8), 0);
+            gpio_set_level(GPIO_OUTPUT_A, 1);
         }
         vTaskDelay(1);
     }

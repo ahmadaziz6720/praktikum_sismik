@@ -30,7 +30,8 @@ void app_main() {
 	gpio_config(&io_conf);
 	io_conf.pin_bit_mask = GPIO_INPUT_PIN_SEL;
 	io_conf.mode = GPIO_MODE_INPUT; // mode input
-	io_conf.pull_up_en = 1; // menggunakan pull up
+	io_conf.pull_up_en = 0; // menggunakan pull up
+	io_conf.pull_down_en = 1; // menggunakan pull down
 	gpio_config(&io_conf);
 	
 	int counter = 0;
