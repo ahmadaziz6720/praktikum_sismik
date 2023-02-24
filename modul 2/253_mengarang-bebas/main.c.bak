@@ -40,7 +40,7 @@ void app_main(void) {
 	};
 	
 	// gunakan timer group dan hardware timer yang valid
-	timer_init(TIMER_GROUP_1, TIMER_0, &config);
+	timer_init(TIMER_GROUP_1, TIMER_0, &config); uint64_t set_timer_val
 	timer_set_counter_value(TIMER_GROUP_1, TIMER_0, 0x00000000ULL);
 	timer_start(TIMER_GROUP_1, TIMER_0);
 	
@@ -64,7 +64,5 @@ void app_main(void) {
 		}
 		
 		// Buatlah kondisi dimana 8 buah LED tersebut (GPIO_OUTPUT_A hingga GPIO_OUTPUT_H) menyala bergantian hanya menggunakan variabel count dengan fungsi/API gpio_set_level(). Total hanya memerlukan 8 line tambahan vTaskDelay(1);
-		gpio_set_level(count, 1);
-		vTaskDelay(1);
 	}
 }
