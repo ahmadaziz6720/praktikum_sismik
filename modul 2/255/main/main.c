@@ -10,6 +10,7 @@
 #define GPIO_OUTPUT_F 21
 #define GPIO_OUTPUT_G 22
 #define GPIO_OUTPUT_H 23
+
 #define GPIO_OUTPUT_PIN_SEL ((1ULL<<GPIO_OUTPUT_A) | (1ULL<<GPIO_OUTPUT_B) | (1ULL<<GPIO_OUTPUT_C)| (1ULL<<GPIO_OUTPUT_D)| (1ULL<<GPIO_OUTPUT_E)| (1ULL<<GPIO_OUTPUT_F)| (1ULL<<GPIO_OUTPUT_G)| (1ULL<<GPIO_OUTPUT_H));
 #define GPIO_INPUT_PB 15
 #define GPIO_INPUT_PIN_SEL (1ULL<<GPIO_INPUT_PB)
@@ -23,6 +24,7 @@ static void IRAM_ATTR button_isr_handler(void* arg) {
 }
 
 void app_main() {
+    int i=0;
     gpio_config_t io_conf;
     io_conf.intr_type = GPIO_INTR_POSEDGE;
     io_conf.mode = GPIO_MODE_OUTPUT;
@@ -42,6 +44,7 @@ void app_main() {
     
     while (1) {
         if(gpio_get_level(GPIO_INPUT_PB) == 0) {
+            
             on_led_count = (on_led_count + 1) % 8;
             uint64_t led_mask = 0x0000000000000001ULL << on_led_count;
             gpio_set_level(GPIO_OUTPUT_A + on_led_count, 1);
