@@ -38,15 +38,11 @@ void app_main() {
 	
 	while (1) {
 		if (gpio_get_level(GPIO_INPUT_PB) == 0) {
-			
 			counter++;
-			
 			if (counter > 7) {
 				counter = 0;
 			}
-			
 			vTaskDelay(xDelay);
-			
 		}
 		
 		if (counter == 0) {

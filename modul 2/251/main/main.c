@@ -12,7 +12,7 @@
 #define GPIO_OUTPUT_H 23
 #define GPIO_OUTPUT_PIN_SEL ((1ULL<<GPIO_OUTPUT_A) | (1ULL<<GPIO_OUTPUT_B) | (1ULL<<GPIO_OUTPUT_C)| (1ULL<<GPIO_OUTPUT_D)| (1ULL<<GPIO_OUTPUT_E)| (1ULL<<GPIO_OUTPUT_F)| (1ULL<<GPIO_OUTPUT_G)| (1ULL<<GPIO_OUTPUT_H))
 
-#define DELAY_MS 500 // isi waktu delay
+#define DELAY_MS 500 // waktu delay
 
 const TickType_t xDelay = DELAY_MS / portTICK_PERIOD_MS;
 void app_main() {
