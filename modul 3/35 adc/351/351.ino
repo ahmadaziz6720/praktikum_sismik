@@ -1,4 +1,5 @@
 #define pinAnalog A0
+float bacaAnalog;
 
 int sinyalADC;
 

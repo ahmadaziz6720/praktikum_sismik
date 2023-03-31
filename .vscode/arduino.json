@@ -1,6 +1,6 @@
 {
-    "configuration": "PSRAM=disabled,PartitionScheme=default,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none",
-    "board": "esp32:esp32:esp32",
-    "port": "COM6",
-    "sketch": "modul 2\\265\\main.ino"
+    "configuration": "cpu=atmega328old",
+    "board": "arduino:avr:nano",
+    "port": "COM7",
+    "sketch": "modul 3\\35 adc\\351\\351.ino"
 }

@@ -1,5 +1,5 @@
-char dataMaster1 = '1';
-char dataMaster2 = '0';
+String dataMaster1 = "1";
+String dataMaster2 = "0";
 
 void setup() {
   //Pilih nilai port serial
@@ -8,14 +8,14 @@ void setup() {
 
 void loop() {
   //Tulis dataMaster1 ke port serial
-  Serial.write(dataMaster1);
+  Serial.println(dataMaster1);
   
   //Berikan delay
-  delay(250);
+  delay(1000);
   
   //Tulis dataMaster2 ke port serial
-  Serial.write(dataMaster2);
+  Serial.println(dataMaster2);
   
   //Berikan delay
-  delay(250);
+  delay(1000);
 }

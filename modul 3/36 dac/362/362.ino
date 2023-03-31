@@ -7,7 +7,7 @@
 int i;
 int DACInput;
 
-float delayVal = ... //Masukan nilai delayVal agar frekuensi yang diterima nano receiver benar-benar 1kHz;
+float delayVal = 10000000000; //Masukan nilai delayVal agar frekuensi yang diterima nano receiver benar-benar 1kHz;
 
 const PROGMEM uint16_t DAC_LookUpTable[512] = {
   // isi dengan sinyal digital sinusoidal dalam format 8-bit
