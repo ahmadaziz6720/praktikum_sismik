@@ -1,0 +1,143 @@
+#include "Wire.h"
+#define MPU_ADDR 0x68
+#define rangePerDigit .000061f
+#include <LiquidCrystal_I2C.h>
+#define LED 19
+
+//Tasks Priority
+#define priorityTask1 2
+#define priorityTask2 2
+#define priorityTask3 2
+
+int pitch, roll;
+
+//Mutex Definition
+SemaphoreHandle_t xMutex;
+
+//Task Display
+int lcdColumns = 16;
+int lcdRows = 2;
+
+//Membuat objek LCD
+LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);
+
+//Sensing Task
+void SensingTask(void *pvParam);
+
+//LED Task
+void BlinkTask(void *pvParam);
+
+//Display Task
+void DisplayTask(void *pvParam);
+
+void setup() {
+	
+	Serial.begin(9600);
+	
+	//Inisiasi LED
+	pinMode(LED, OUTPUT);
+	
+	//Inisiasi MPU
+	Wire.begin();
+	Wire.beginTransmission(MPU_ADDR); //Inisialisasi komunikasi I2C dengan MPU
+	Wire.write(0x6B); //Power Management untuk MPU6050
+	Wire.write(0); //Membangunkan MPU
+	Wire.endTransmission(true);
+	
+	//Inisiasi LCD
+	lcd.init();
+	lcd.backlight();
+	
+	//Mutex
+	xMutex = xSemaphoreCreateMutex();
+	
+	//Task Start
+	xTaskCreatePinnedToCore(SensingTask, "Task 1", 2048, NULL,priorityTask1, NULL, 0);
+	xTaskCreatePinnedToCore(BlinkTask, "Task 2", 2048, NULL,
+	priorityTask2, NULL, 1);
+	xTaskCreatePinnedToCore(DisplayTask, "Task 3", 2048, NULL,
+	priorityTask3, NULL, 0);
+}
+
+	
+void SensingTask(void *pvParam) {
+	(void) pvParam;
+	
+	int16_t accX, accY, accZ;
+	float NormAccX, NormAccY, NormAccZ;
+	
+	while (1) {
+		xSemaphoreTake(xMutex, portMAX_DELAY);
+		{
+			Wire.beginTransmission(MPU_ADDR);
+			Wire.write(0x3B);
+			Wire.endTransmission(false); //Agar transimisi tetap berjalan
+			Wire.requestFrom(MPU_ADDR, 6, true); //Akan mengakses 6 register
+			
+			//Pembacaan urut dari alamat awal
+			accX = (Wire.read()<<8)|(Wire.read()); 
+			accY = (Wire.read()<<8)|(Wire.read());
+			accZ = (Wire.read()<<8)|(Wire.read());
+		}
+		
+		xSemaphoreGive(xMutex);
+		
+		//Normalisasi Raw Data tersebut
+		NormAccX = accX * rangePerDigit * 9.80665f;
+		NormAccY = accY * rangePerDigit * 9.80665f;
+		NormAccZ = accZ * rangePerDigit * 9.80665f;
+		
+		//Mengkalkulasi pitch dan roll
+		pitch = -(atan2(NormAccX, sqrt(NormAccY * NormAccY + NormAccZ * NormAccZ)) * 180.0) / M_PI;
+		roll = (atan2(NormAccY, NormAccZ) * 180.0) / M_PI;
+		
+		//Periode 100ms
+		vTaskDelay(pdMS_TO_TICKS(100));
+	}
+}
+
+
+void BlinkTask(void *pvParam) {
+	(void) pvParam;
+	bool high = 0;
+	
+	while (1) {
+		
+		//Ketika roll di luar rentang -90 hingga 90 derajat
+		if (roll > 90 || roll < -90) {
+			digitalWrite(LED,HIGH); //LED dinyalakan
+		} else {
+			digitalWrite(LED,LOW);
+		}
+		
+		//Periode 500ms
+		vTaskDelay(pdMS_TO_TICKS(500));
+		digitalWrite(LED,LOW);
+		vTaskDelay(pdMS_TO_TICKS(500));
+	}
+}
+
+void DisplayTask(void *pvParam) {
+	(void) pvParam;
+	
+	while (1) {
+		xSemaphoreTake(xMutex, portMAX_DELAY);
+		
+		{
+			lcd.clear();
+			lcd.setCursor(0, 0);
+			lcd.print("Pitch : ");
+			lcd.print(pitch);
+			lcd.setCursor(0, 1);
+			lcd.print("Roll : ");
+			lcd.print(roll);
+		}
+		
+		xSemaphoreGive(xMutex);
+		
+		//Refresh 1 detik
+		vTaskDelay(pdMS_TO_TICKS(1000));
+	}
+}
+
+void loop() {  } //kosong
