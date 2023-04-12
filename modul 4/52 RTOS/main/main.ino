@@ -1,3 +1,14 @@
+// Praktikum EL3116 - Sistem Microprosesor
+// Modul : 4
+// Percobaan : 2
+// Tanggal : 31 Maret 2023
+// Kelompok : 10
+// Rombongan : B
+// Nama (NIM) 1 : Ahmad Aziz (13220034)
+// Nama (NIM) 2 : Emmanuella Pramudita Rumanti (13220031)
+// Nama File : main.ino
+// Deskripsi : code for reading MPU6050 and diplay to LCD with RTOS
+
 #include "Wire.h"
 #define MPU_ADDR 0x68
 #define rangePerDigit .000061f
@@ -99,7 +110,6 @@ void SensingTask(void *pvParam) {
 
 void BlinkTask(void *pvParam) {
 	(void) pvParam;
-	bool high = 0;
 	
 	while (1) {
 		

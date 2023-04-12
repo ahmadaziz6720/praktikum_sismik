@@ -1,3 +1,14 @@
+// Praktikum EL3116 - Sistem Microprosesor
+// Modul : 4
+// Percobaan : 1
+// Tanggal : 31 Maret 2023
+// Kelompok : 10
+// Rombongan : B
+// Nama (NIM) 1 : Ahmad Aziz (13220034)
+// Nama (NIM) 2 : Emmanuella Pramudita Rumanti (13220031)
+// Nama File : main.ino
+// Deskripsi : code for reading MPU6050 sensors
+
 #include "Wire.h"
 #define MPU_ADDR 0x68
 
