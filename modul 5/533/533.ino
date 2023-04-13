@@ -2,6 +2,8 @@
 Mengukur posisi relatif rotary encoder dengan INT0 dan INT1
 */
 
+#include "TimerOne.h"
+
 int state=0;
 long int posisi=0;
 float radNew, radPrev, t1, t2;

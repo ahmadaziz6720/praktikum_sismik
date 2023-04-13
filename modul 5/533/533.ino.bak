@@ -5,6 +5,7 @@ Mengukur posisi relatif rotary encoder dengan INT0 dan INT1
 int state=0;
 long int posisi=0;
 float radNew, radPrev, t1, t2;
+float radLast = 0;
 
 void ISR_INT0(){
 	int pinA,pinB;
