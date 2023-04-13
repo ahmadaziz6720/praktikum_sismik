@@ -1,13 +1,15 @@
 // Praktikum EL3116 - Sistem Microprosesor
 // Modul : 5
-// Percobaan : 1
+// Percobaan : 2
 // Tanggal : 13 April 2023
 // Kelompok : 10
 // Rombongan : B
 // Nama (NIM) 1 : Ahmad Aziz (13220034)
 // Nama (NIM) 2 : Emmanuella Pramudita Rumanti (13220031)
-// Nama File : openloopSpeed.ino
-// Deskripsi : speed control using PWM and read speed using encoder
+// Nama File : pidSpeed.ino
+// Deskripsi : speed control using PID
+
+#include <FastPID.h>
 
 #define PWM 5 // PWM output pin
 #define fwd 6 // forward direction pin
@@ -24,6 +26,16 @@ float lastPosisi=0;
 float kecepatan=0;
 
 unsigned long prevMillis = 0;
+
+float Kp=0.1, Ki=0.5, Kd=0, Hz=10;
+int output_bits = 8;
+bool output_signed = true;
+
+int setpoint = 60; // rpm
+
+uint8_t output;
+
+FastPID speedPID(Kp, Ki, Kd, Hz, output_bits, output_signed);
 
 void ISR_INT0(){
     int pinA,pinB;
@@ -75,7 +87,7 @@ void setup() {
 
     digitalWrite(fwd, HIGH);
     digitalWrite(rev, LOW);
-    analogWrite(PWM, 255);
+    analogWrite(PWM, 0);
 
     prevMillis = millis();
     lastPosisi = posisi;
@@ -88,6 +100,9 @@ void loop() {
         lastPosisi = posisi;
         kecepatan = getSpeed()*60/ppr; //rpm
     }
+
+    output = speedPID.step(setpoint, kecepatan);
+    analogWrite(PWM, output);
     
     sudut = ppr * 360.0 / posisi;
     Serial.print("Posisi: ");

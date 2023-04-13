@@ -2,5 +2,5 @@
     "configuration": "cpu=atmega328old",
     "board": "arduino:avr:nano",
     "port": "COM7",
-    "sketch": "modul 3\\35 adc\\351\\351.ino"
+    "sketch": "modul 5\\pidSpeed\\pidSpeed.ino"
 }
