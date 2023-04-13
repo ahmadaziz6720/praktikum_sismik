@@ -50,9 +50,9 @@ void setup() {
 	
 	//Inisiasi MPU
 	Wire.begin();
-	Wire.beginTransmission(MPU_ADDR); //Inisialisasi komunikasi I2C dengan MPU
-	Wire.write(0x6B); //Power Management untuk MPU6050
-	Wire.write(0); //Membangunkan MPU
+	Wire.beginTransmission(MPU_ADDR); 
+	Wire.write(0x6B); 
+	Wire.write(0); 
 	Wire.endTransmission(true);
 	
 	//Inisiasi LCD
@@ -86,9 +86,9 @@ void SensingTask(void *pvParam) {
 			Wire.requestFrom(MPU_ADDR, 6, true); //Akan mengakses 6 register
 			
 			//Pembacaan urut dari alamat awal
-			accX = (Wire.read()<<8)|(Wire.read()); 
-			accY = (Wire.read()<<8)|(Wire.read());
-			accZ = (Wire.read()<<8)|(Wire.read());
+			accX = (Wire.read() <<8) | (Wire.read()); 
+			accY = (Wire.read() <<8) | (Wire.read());
+			accZ = (Wire.read() <<8) | (Wire.read());
 		}
 		
 		xSemaphoreGive(xMutex);
