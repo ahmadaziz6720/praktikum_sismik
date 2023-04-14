@@ -56,7 +56,7 @@ void setup() {
 }
 void loop() {
 	//Konversikan hasil pengukuran rotary encoder menjadi sudut pergerakan motor dalam satuan radian dan kirimkan ke serial monitor
-	radNew = float(posisi)*2*PI/m; // ganti m dengan konstanta motor
+	radNew = float(posisi)*2*PI/1570; // ganti m dengan konstanta motor
 	
 	Serial.print("rad: ");
 	Serial.println(radA); 

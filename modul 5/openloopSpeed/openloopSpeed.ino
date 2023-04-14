@@ -13,15 +13,17 @@
 #define fwd 6 // forward direction pin
 #define rev 7 // reverse direction pin
 
-#define ppr 600 // pulse per revolution
-#define samplingTime 100 // 1 second
 
+float samplingTime = 50.0; // 1 second
+
+float ppr = 1570.0; // pulse per revolution
 int state=0;
 long int posisi=0;
 float sudut=0;
 float lastPosisi=0;
 
 float kecepatan=0;
+float speed;
 
 unsigned long prevMillis = 0;
 
@@ -73,9 +75,9 @@ void setup() {
     pinMode(fwd, OUTPUT);
     pinMode(rev, OUTPUT);
 
-    digitalWrite(fwd, HIGH);
-    digitalWrite(rev, LOW);
-    analogWrite(PWM, 255);
+    digitalWrite(fwd, LOW);
+    digitalWrite(rev, HIGH);
+    analogWrite(PWM, 40);
 
     prevMillis = millis();
     lastPosisi = posisi;
@@ -86,20 +88,17 @@ void loop() {
     if(millis() - prevMillis >= samplingTime){
         prevMillis = millis();
         lastPosisi = posisi;
-        kecepatan = getSpeed()*60/ppr; //rpm
+        
+    }
+    float kecepatan = ((posisi - lastPosisi) / samplingTime)*(1000.0/samplingTime);
+    if(millis() - prevMillis >= samplingTime){
+      Serial.print("Posisi: ");
+      Serial.print(sudut);
+      Serial.print("Kecepatan: ");
+      Serial.println(float (kecepatan));
     }
     
+    
     sudut = ppr * 360.0 / posisi;
-    Serial.print("Posisi: ");
-    Serial.print(posisi);
-    Serial.print(" Sudut: ");
-    Serial.print(sudut);
-    Serial.print("Kecepatan: ");
-    Serial.println(kecepatan);
-}
-
-float getSpeed(){
-    float speed = 0;
-    speed = ((posisi - lastPosisi) / samplingTime)*(1000/samplingTime); //pulse per detik
-    return speed;
+    
 }

@@ -15,8 +15,8 @@
 #define fwd 6 // forward direction pin
 #define rev 7 // reverse direction pin
 
-#define ppr 600 // pulse per revolution
-#define samplingTime 100 // 1 second
+float ppr = 1570.0; // pulse per revolution
+float samplingTime = 100.0; // 1 second
 
 int state=0;
 long int posisi=0;
@@ -27,7 +27,7 @@ float kecepatan=0;
 
 unsigned long prevMillis = 0;
 
-float Kp=0.1, Ki=0.5, Kd=0, Hz=10;
+float Kp=6.0, Ki=6.0, Kd=0.30, Hz=10;
 int output_bits = 8;
 bool output_signed = true;
 
@@ -96,25 +96,24 @@ void loop() {
     //Konversikan hasil pengukuran rotary encoder menjadi sudut pergerakan motor
 
     if(millis() - prevMillis >= samplingTime){
+        float kecepatan = ((posisi - lastPosisi) / samplingTime)*(1000.0/samplingTime);
         prevMillis = millis();
         lastPosisi = posisi;
-        kecepatan = getSpeed()*60/ppr; //rpm
+        output = speedPID.step(setpoint, kecepatan);
+        analogWrite(PWM, map(output, 0,255, 0, 100));
+        Serial.print("Posisi: ");
+        Serial.print(map(output, 0,255, 0, 100));
+        Serial.print("Kecepatan: ");
+        Serial.println(float (kecepatan));
     }
-
-    output = speedPID.step(setpoint, kecepatan);
-    analogWrite(PWM, output);
     
-    sudut = ppr * 360.0 / posisi;
-    Serial.print("Posisi: ");
-    Serial.print(posisi);
-    Serial.print(" Sudut: ");
-    Serial.print(sudut);
-    Serial.print("Kecepatan: ");
-    Serial.println(kecepatan);
-}
+//    if(millis() - prevMillis >= samplingTime){
+//      
+//    }
+    
 
-float getSpeed(){
-    float speed = 0;
-    speed = ((posisi - lastPosisi) / samplingTime)*(1000/samplingTime); //pulse per detik
-    return speed;
+    
+    
+//    sudut = ppr * 360.0 / posisi;
+    
 }
